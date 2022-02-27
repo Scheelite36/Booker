@@ -95,7 +95,12 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
+<!--        kaptcha验证码-->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

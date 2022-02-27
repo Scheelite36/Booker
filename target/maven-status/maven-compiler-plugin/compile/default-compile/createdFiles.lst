@@ -1,0 +1,13 @@
+com/example/booker/controller/CategoryController.class
+com/example/booker/service/BookService.class
+com/example/booker/service/TestService.class
+com/example/booker/mapper/BookMapper.class
+com/example/booker/service/impl/CategoryServiceImpl.class
+com/example/booker/entity/Book.class
+com/example/booker/entity/Category.class
+com/example/booker/service/CategoryService.class
+com/example/booker/controller/TestController.class
+com/example/booker/mapper/CategoryMapper.class
+com/example/booker/entity/TestTable.class
+com/example/booker/mapper/TestMapper.class
+com/example/booker/service/impl/BookServiceImpl.class
