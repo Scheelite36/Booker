@@ -3,11 +3,14 @@ package com.example.booker.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author Scheelite
@@ -19,6 +22,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Member {
 
     @TableId(type = IdType.AUTO)
@@ -32,5 +36,5 @@ public class Member {
 
     private Integer salt;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 }

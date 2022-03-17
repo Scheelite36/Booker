@@ -1,12 +1,18 @@
 package com.example.booker.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.booker.entity.Member;
+import com.example.booker.service.MemberService;
+import com.example.booker.utils.ResponseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +26,9 @@ import java.util.Objects;
 @Controller
 public class MemberController {
 
+    @Resource
+    MemberService memberService;
+
     @GetMapping("/register.html")
     public ModelAndView showRegister() {
         return new ModelAndView("register");
@@ -27,16 +36,8 @@ public class MemberController {
 
     @PostMapping("/registerr")
     @ResponseBody
-    public Map register(String username, String password, String vc, HttpServletRequest request){
-        String kaptchaVerifyCode = (String) request.getSession().getAttribute("kaptchaVerifyCode");
-        HashMap map = new HashMap();
-        if (Objects.isNull(vc) || Objects.isNull(kaptchaVerifyCode) || !vc.equalsIgnoreCase(kaptchaVerifyCode)) {
-            map.put("code","3000");
-            map.put("msg","验证码错误");
-        }else{
-            map.put("code","0");
-            map.put("msg","success");
-        }
-        return map;
+    public ResponseUtils register(String username, String password, String nickname, String vc, HttpServletRequest request) throws NoSuchAlgorithmException {
+        memberService.register(username,password,nickname,vc,request);
+        return ResponseUtils.success();
     }
 }

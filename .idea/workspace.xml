@@ -10,12 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="151a8b25-9f2c-42af-a0e8-9d81ddb86c37" name="Default Changelist" comment="init">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/controller/KaptchaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/controller/MemberController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/ftl/register.ftl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/consts/ResponseEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/exception/BussinessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/handler/ExceptionsHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/utils/MD5Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/utils/ResponseUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/booker/utils/MD5UtilsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/booker/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/booker/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/entity/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/booker/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/booker/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/booker/service/impl/MemberServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/ftl/register.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/ftl/register.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/booker/controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/booker/controller/MemberController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +37,7 @@
         <option value="spring-beans.schema" />
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="JUnit3 Test Class" />
         <option value="Class" />
       </list>
@@ -103,18 +112,21 @@
       <recent name="$PROJECT_DIR$/src/main/webapp" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.booker.utils" />
       <recent name="com.example.booker.service" />
       <recent name="com.example.booker.service.impl" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.46">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -151,17 +163,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestServiceTestTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MD5UtilsTest.testName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Booker" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.booker.service.*" />
+          <option name="PATTERN" value="com.example.booker.utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.example.booker.service" />
-      <option name="MAIN_CLASS_NAME" value="com.example.booker.service.TestServiceTestTable" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="com.example.booker.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.example.booker.utils.MD5UtilsTest" />
+      <option name="METHOD_NAME" value="testName" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -177,22 +190,6 @@
       <option name="PACKAGE_NAME" value="com.example.booker.service" />
       <option name="MAIN_CLASS_NAME" value="com.example.booker.service.TestServiceTest" />
       <option name="METHOD_NAME" value="delete" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestServiceTest.insert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Booker" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.booker.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.booker.service" />
-      <option name="MAIN_CLASS_NAME" value="com.example.booker.service.TestServiceTest" />
-      <option name="METHOD_NAME" value="insert" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -489,21 +486,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.TestServiceTestTable" />
-      <item itemvalue="JUnit.TestServiceTest.insert" />
       <item itemvalue="JUnit.TestServiceTest.insert2" />
       <item itemvalue="JUnit.TestServiceTest.delete" />
       <item itemvalue="JUnit.CategoryServiceImplTest.getAllCategories" />
       <item itemvalue="JUnit.BookServiceTest.testSelectBookPage" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.46" />
+      <item itemvalue="JUnit.MD5UtilsTest.testName" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MD5UtilsTest.testName" />
         <item itemvalue="JUnit.BookServiceTest.testSelectBookPage" />
         <item itemvalue="JUnit.CategoryServiceImplTest.getAllCategories" />
         <item itemvalue="JUnit.TestServiceTest.delete" />
         <item itemvalue="JUnit.TestServiceTest.insert2" />
-        <item itemvalue="JUnit.TestServiceTest.insert" />
       </list>
     </recent_temporary>
   </component>
@@ -536,7 +532,10 @@
       <workItem from="1645350028068" duration="11414000" />
       <workItem from="1645373394752" duration="992000" />
       <workItem from="1645450535775" duration="1034000" />
-      <workItem from="1645970390097" duration="4187000" />
+      <workItem from="1645970390097" duration="5071000" />
+      <workItem from="1647185638474" duration="1127000" />
+      <workItem from="1647275200527" duration="2888000" />
+      <workItem from="1647361661029" duration="14342000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1645374269136</created>
