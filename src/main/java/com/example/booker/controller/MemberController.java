@@ -1,6 +1,7 @@
 package com.example.booker.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.booker.consts.Consts;
 import com.example.booker.entity.Member;
 import com.example.booker.service.MemberService;
 import com.example.booker.utils.ResponseUtils;
@@ -36,8 +37,23 @@ public class MemberController {
 
     @PostMapping("/registerr")
     @ResponseBody
-    public ResponseUtils register(String username, String password, String nickname, String vc, HttpServletRequest request) throws NoSuchAlgorithmException {
+    public ResponseUtils register(String username, String password, String nickname, String vc, HttpServletRequest request) {
         memberService.register(username,password,nickname,vc,request);
         return ResponseUtils.success();
     }
+
+    @GetMapping("/login.html")
+    public ModelAndView showLogin(){
+        return new ModelAndView("login");
+    }
+
+    @PostMapping("/check_login")
+    @ResponseBody
+    public ResponseUtils login(String username, String password, String vc, HttpServletRequest request){
+        Member member = memberService.login(username, password, vc, request);
+        request.getSession().setAttribute(Consts.BOOKER_MEMBER,member);
+        return ResponseUtils.success();
+    }
+
+
 }

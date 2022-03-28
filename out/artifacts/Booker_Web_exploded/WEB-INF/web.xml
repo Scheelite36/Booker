@@ -31,4 +31,15 @@
         <filter-name>characterFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+<!--    登陆过滤器-->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.example.booker.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/updateReadState</url-pattern>
+        <url-pattern>/enjoy</url-pattern>
+        <url-pattern>/evaluate</url-pattern>
+    </filter-mapping>
 </web-app>

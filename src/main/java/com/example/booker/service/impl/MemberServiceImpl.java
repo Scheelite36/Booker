@@ -34,17 +34,14 @@ import java.util.Random;
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements MemberService {
 
     @Override
-    public void register(String username, String password, String nickname, String vc, HttpServletRequest request) throws NoSuchAlgorithmException {
+    public void register(String username, String password, String nickname, String vc, HttpServletRequest request) {
+        // 校验验证码
+        checkVerifyCode(vc,request);
         // 是否用户名重复
         LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Member::getUsername,username);
         if (this.count(queryWrapper)!=0) {
             throw new BussinessException(ResponseEnum.DUPLICATE_NAME.getCode(),ResponseEnum.DUPLICATE_NAME.getMsg());
-        }
-        // 校验验证码
-        String kaptchaVerifyCode = (String) request.getSession().getAttribute("kaptchaVerifyCode");
-        if (Objects.isNull(vc) || Objects.isNull(kaptchaVerifyCode) || !vc.equalsIgnoreCase(kaptchaVerifyCode)) {
-            throw new BussinessException(ResponseEnum.VERIFY_CODE_ERROR.getCode(), ResponseEnum.VERIFY_CODE_ERROR.getMsg());
         }
         // 保存 注册
         int salt = (int) (Math.random() * 1000);
@@ -52,5 +49,29 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         Member build = Member.builder().username(username).password(encodePass)
                 .nickname(nickname).salt(salt).createTime(LocalDateTime.now()).build();
         this.save(build);
+    }
+
+    @Override
+    public Member login(String username, String password, String vc, HttpServletRequest request) {
+        checkVerifyCode(vc,request);
+        // 查找用户
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Member::getUsername,username);
+        Member one = this.getOne(queryWrapper);
+        if (Objects.isNull(one)) {
+            throw new BussinessException(ResponseEnum.NOT_EXSIT.getCode(), ResponseEnum.NOT_EXSIT.getMsg());
+        }
+        if (!MD5Utils.getMD5String(password + one.getSalt()).equals(one.getPassword())) {
+            throw new BussinessException(ResponseEnum.WRONG_PASSWORD.getCode(), ResponseEnum.WRONG_PASSWORD.getMsg());
+        }
+        return one;
+    }
+
+    private void checkVerifyCode(String vc, HttpServletRequest request){
+        // 校验验证码
+        String kaptchaVerifyCode = (String) request.getSession().getAttribute("kaptchaVerifyCode");
+        if (Objects.isNull(vc) || Objects.isNull(kaptchaVerifyCode) || !vc.equalsIgnoreCase(kaptchaVerifyCode)) {
+            throw new BussinessException(ResponseEnum.VERIFY_CODE_ERROR.getCode(), ResponseEnum.VERIFY_CODE_ERROR.getMsg());
+        }
     }
 }

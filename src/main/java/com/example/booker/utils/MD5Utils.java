@@ -10,8 +10,13 @@ import java.security.NoSuchAlgorithmException;
  * @description
  **/
 public class MD5Utils {
-    public static String getMD5String(String str) throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
+    public static String getMD5String(String str) {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         // 进行hash计算，生成长度16的字节数组
         byte[] digest = md5.digest(str.getBytes());
         StringBuffer sb = new StringBuffer(digest.length*2);

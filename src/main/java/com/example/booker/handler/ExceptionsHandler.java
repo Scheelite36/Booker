@@ -1,8 +1,11 @@
 package com.example.booker.handler;
 
+import com.example.booker.consts.ResponseEnum;
 import com.example.booker.exception.BussinessException;
 import com.example.booker.utils.ResponseUtils;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -14,8 +17,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionsHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseUtils exceptions(Exception e){
+        return ResponseUtils.error(ResponseEnum.UNKNOWN_ERROR.getCode(), ResponseEnum.UNKNOWN_ERROR.getMsg());
+    }
+
     @ExceptionHandler(BussinessException.class)
-    public ResponseUtils bussinessExceptionHandler(Integer code,String msg){
-        return ResponseUtils.error(code,msg);
+    public ResponseUtils bussinessExceptionHandler(BussinessException bussinessException){
+        return ResponseUtils.error(bussinessException.getCode(), bussinessException.getMsg());
     }
 }

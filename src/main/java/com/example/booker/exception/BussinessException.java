@@ -1,5 +1,6 @@
 package com.example.booker.exception;
 
+import com.example.booker.consts.ResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,8 @@ import lombok.Setter;
 public class BussinessException extends RuntimeException{
     private Integer code;
     private String msg;
+
+    public BussinessException(ResponseEnum responseEnum){
+        this(responseEnum.getCode(), responseEnum.getMsg());
+    }
 }

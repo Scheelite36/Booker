@@ -22,5 +22,15 @@ public interface MemberService extends IService<Member> {
      * @param request
      * @throws NoSuchAlgorithmException
      */
-    void register(String username, String password, String nickname, String vc, HttpServletRequest request) throws NoSuchAlgorithmException;
+    void register(String username, String password, String nickname, String vc, HttpServletRequest request);
+
+    /**
+     * 用户登陆
+     * @param username
+     * @param password
+     * @param vc
+     * @param request
+     * @return
+     */
+    Member login(String username, String password, String vc, HttpServletRequest request);
 }

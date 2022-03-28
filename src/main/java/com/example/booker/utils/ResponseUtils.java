@@ -22,15 +22,19 @@ public class ResponseUtils<T> {
     private String msg;
     private T data;
 
-    public static ResponseUtils success(){
-        return new ResponseUtils(ResponseEnum.SUCESS.getCode(), ResponseEnum.SUCESS.getMsg(), null);
+    public static <T> ResponseUtils<T> success(){
+        return new ResponseUtils<>(ResponseEnum.SUCESS.getCode(), ResponseEnum.SUCESS.getMsg(), null);
     }
 
-    public static ResponseUtils success(Object data){
-        return new ResponseUtils(ResponseEnum.SUCESS.getCode(), ResponseEnum.SUCESS.getMsg(), data);
+    public static <T> ResponseUtils<T> success(T data){
+        return new ResponseUtils<>(ResponseEnum.SUCESS.getCode(), ResponseEnum.SUCESS.getMsg(), data);
     }
 
-    public static ResponseUtils error(Integer code, String msg){
-        return new ResponseUtils(code,msg,null);
+    public static <T> ResponseUtils<T> error(Integer code, String msg){
+        return new ResponseUtils<>(code,msg,null);
+    }
+
+    public static <T> ResponseUtils<T> error(ResponseEnum responseEnum){
+        return new ResponseUtils<>(responseEnum.getCode(), responseEnum.getMsg(), null);
     }
 }

@@ -19,4 +19,27 @@ public interface EvaluationService extends IService<Evaluation> {
      * @return
      */
     List<Evaluation> getEvaluation(Long bookId);
+
+    /**
+     * 进行点评
+     * @param bookId
+     * @param score
+     * @param content
+     */
+    void evaluate(Long bookId, Integer score, String content);
+
+    /**
+     * get one evaluation by memberId and bookId
+     * @param memberId
+     * @param bookId
+     * @return
+     */
+    Evaluation getOneBySelect(Long memberId, Long bookId);
+
+    /**
+     * enjoy button
+     * @param evaluationId
+     * @return
+     */
+    Evaluation enjoy(Long evaluationId);
 }

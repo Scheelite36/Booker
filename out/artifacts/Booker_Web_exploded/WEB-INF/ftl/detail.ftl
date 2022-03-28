@@ -49,6 +49,66 @@
         $(function () {
             $(".stars").raty({readOnly: true});
         })
+        $(function (){
+            <#if state??>
+                //存在阅读状态就进行载入 高亮
+            $("*[data-read-state='${state.getReadState()}']").addClass("highlight");
+            </#if>
+            <#if !loginMember??>
+                $("*[data-read-state],#btnEvaluation,*[data-evaluation-id] span").click(function (){
+                    $("#exampleModalCenter").modal("show");
+                })
+                <#else>
+            // 更新阅读状态
+                $("*[data-read-state]").click(function (){
+                    var readState = $(this).data("read-state");
+                    $.post("/updateReadState",{
+                        bookId:${book.bookId},
+                        readState:readState
+                    },function (json) {
+                        if(json.code===200){
+                            $("*[data-read-state]").removeClass("highlight");
+                            $("*[data-read-state = '"+ readState +"']").addClass("highlight");
+                        }
+                    },"json")
+                })
+                // 写短评
+                $("#btnEvaluation").click(function (){
+                    $("#score").raty({}); //转换为星型组件
+                    $("#dlgEvaluation").modal("show"); // show the evaluation window
+                })
+                // submit
+                $("#btnSubmit").click(function(){
+                    var score = $("#score").raty("score");
+                    var content = $("#content").val();
+                    // jundge if content is null
+                    if (score === 0 || content.trim() === "") {
+                        return;
+                    }
+                    // send eavaluate request
+                    $.post("/evaluate",{
+                        score:score,
+                        content:content,
+                        bookId:${book.bookId},
+                        memberId:${loginMember.memberId}
+                    },function (json) {
+                        if (json.code === 200) {
+                            window.location.reload(); //refresh this page
+                        }
+                    },"json")
+                })
+            // click enjoy button
+            $("*[data-evaluation-id]").click(function (){
+                var evaluationId = $(this).data("evaluation-id");
+                console.log(evaluationId);
+                $.post("/enjoy",{evaluationId:evaluationId},function (json){
+                    if (json.code === 200) {
+                        $("*[data-evaluation-id = '"+ evaluationId +"'] span").text(json.data.enjoy);
+                    }
+                },"json")
+            })
+            </#if>
+        })
     </script>
 </head>
 <body>
@@ -122,15 +182,15 @@
                 <span class="mr-2 small pt-1">${evaluations.member.username}</span>
                 <span class="stars mr-2" data-score="${evaluations.score}"></span>
 
-                <button type="button" data-evaluation-id="${evaluations.evaluationId}"
+                <button type="button" data-evaluation-id="${evaluations.evaluationId?string("#")}"
                         class="btn btn-success btn-sm text-white float-right" style="margin-top: -3px;">
                     <img style="width: 24px;margin-top: -5px;" class="mr-1"
                          src="https://img3.doubanio.com/f/talion/7a0756b3b6e67b59ea88653bc0cfa14f61ff219d/pics/card/ic_like_gray.svg"/>
-                    <span>33</span>
+                    <span>${evaluations.enjoy}</span>
                 </button>
             </div>
             <div class="row mt-2 small mb-3">
-                很好的教程，内容写的也比较有深度，值得推荐。
+                ${evaluations.content}
             </div>
             <hr/>
             </div>
@@ -160,14 +220,24 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <h6>为"从 0 开始学爬虫"写短评</h6>
+                <h6>为"${book.bookName}"写短评</h6>
                 <form id="frmEvaluation">
-                    <div class="input-group  mt-2 ">
-                        <span id="score"></span>
-                    </div>
-                    <div class="input-group  mt-2 ">
-                        <input type="text" id="content" name="content" class="form-control p-4" placeholder="这里输入短评">
-                    </div>
+<#--                    // load this user's evaltion with this book-->
+                    <#if evaluation??>
+                        <div class="input-group  mt-2 ">
+                            <span id="score" data-score="${evaluation.score}"></span>
+                        </div>
+                        <div class="input-group  mt-2 ">
+                            <input type="text" id="content" name="content" class="form-control p-4" value="${evaluation.content}">
+                        </div>
+                    <#else>
+                        <div class="input-group  mt-2 ">
+                            <span id="score"></span>
+                        </div>
+                        <div class="input-group  mt-2 ">
+                            <input type="text" id="content" name="content" class="form-control p-4" placeholder="这里输入短评">
+                        </div>
+                    </#if>
                 </form>
             </div>
             <div class="modal-footer">
